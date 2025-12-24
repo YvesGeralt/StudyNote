@@ -1,2 +1,6 @@
 # StudyNote
-my study note
+## List
+- Leetcode
+- Java
+- SSM
+- Deep learning
