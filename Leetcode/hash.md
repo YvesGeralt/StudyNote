@@ -34,3 +34,44 @@
         }
     }
   ```
+
+- 字母异位词分组<br>
+  >模式识别：一旦需要根据特征进行归类，使用HashMap<br>
+
+  ```
+    /*
+    思路
+    1.字母排序，字母顺序排序的字符串是值，字母不同排序是键
+    */
+
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.ArrayList;
+
+    class Solution {
+        public List<List<String>> groupAnagrams(String[] strs) {
+            if(strs.length == 0){
+                return new ArrayList();
+            }
+            
+            HashMap<String , List> ans = new HashMap<String, List>();
+            for(String s : strs){
+                //将字符串按字母顺序排序，作为key
+                char[] ca = s.toCharArray();
+                Arrays.sort(ca);
+                String key = String.valueOf(ca);
+
+                //将当前字符串放入hash表中
+                //与hash表中的key比较，若不存在，则创建新的键值对
+                if(!ans.containsKey(key)){
+                    ans.put(key,new ArrayList());
+                }
+
+                ans.get(key).add(s);
+            }
+
+            return new ArrayList(ans.values());
+        }
+    }
+  ```
+  
