@@ -74,4 +74,50 @@
         }
     }
   ```
+
+- 最长连续序列
+  >数组去重并暴力枚举，用HashSet<br>
+  ```
+    import java.util.HashSet;
+    import java.util.Set;
+    import java.lang.Math.*;
+
+    /**
+        思路：
+        将去重元素放入集合中，对每个元素找他递减和递增的最长序列长度，如果大于之前保存的最大长度，就更新，最后返回
+        最大长度
+
+    */
+
+    class Solution {
+        public int longestConsecutive(int[] nums) {
+            // 定义hash集合，数组去重
+            Set<Integer> num_set = new HashSet<Integer>();
+            for(int num : nums){
+                num_set.add(num);
+            }
+
+            int longestStreak = 0;
+
+            for(int num : num_set){
+                // 必须从不存在num - 1的数开始统计，不然一定不是最长序列
+                if(!num_set.contains(num - 1)) {
+                    int currentNum = num;
+                    int currentSrteak = 1;
+
+                    while(num_set.contains(currentNum + 1)) {
+                        currentSrteak ++;
+                        currentNum ++;
+                    }
+
+                    longestStreak = Math.max(currentSrteak, longestStreak);
+                }
+
+            }
+
+            return longestStreak;
+            }
+        }
+  ```
+
   
