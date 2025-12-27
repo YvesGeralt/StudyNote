@@ -111,3 +111,66 @@
         }
     }
   ```
+- 接雨水
+  > 不要总考虑双指针从一边出发，要考虑双指针从两边同时出发。
+  ```
+    /**
+        思路一：从左边界出发，寻找有=右边界，计算中间积水值
+        思路二：从左右边界出发，记录leftMax和rightMax,计算每个元素能积水的最大值
+    */
+
+    class Solution {
+        public int trap(int[] height) {
+            int i = 0;
+            int sum = 0;
+            int len = height.length;
+            
+            // 跳过左边为0的起点
+            while (i < len && height[i] == 0) {
+                i++;
+            }
+            
+            while (i < len - 1) {  // 至少需要两个柱子才能积水
+                int j = i + 1;
+                int maxIndex = j;  // 记录最大高度的索引
+                
+                // 寻找右边界：比当前左边界高，或者是最高的
+                while (j < len && height[j] < height[i]) {
+                    if (height[j] > height[maxIndex]) {
+                        maxIndex = j;
+                    }
+                    j++;
+                }
+                
+                // 情况1：找到了比左边界高的柱子
+                if (j < len) {
+                    int h = Math.min(height[i], height[j]);
+                    int width = j - i - 1;
+                    int volume = h * width;
+                    
+                    for (int k = i + 1; k < j; k++) {
+                        volume -= Math.min(height[k], h);  // 减去中间柱子的高度
+                    }
+                    sum += volume;
+                    i = j;
+                } 
+                // 情况2：没有找到比左边界高的柱子，使用最高的柱子作为右边界
+                else if (maxIndex < len) {
+                    int h = Math.min(height[i], height[maxIndex]);
+                    int width = maxIndex - i - 1;
+                    int volume = h * width;
+                    
+                    for (int k = i + 1; k < maxIndex; k++) {
+                        volume -= Math.min(height[k], h);
+                    }
+                    sum += volume;
+                    i = maxIndex;
+                } else {
+                    i++;  // 没有找到右边界，移动左指针
+                }
+            }
+            
+            return sum;
+        }
+    }
+  ```
