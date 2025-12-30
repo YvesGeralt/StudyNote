@@ -29,3 +29,36 @@
         }
     }
   ```
+
+- 滑动窗口最大值
+  > 采用双端队列，维护滑动窗口最大值在队头，不维护滑动窗口内最大值之前的元素
+  ```
+    import java.util.*;
+
+    class Solution {
+        public int[] maxSlidingWindow(int[] nums, int k) {
+            int len = nums.length;
+            int[] result = new int[len - k + 1];
+            Deque<Integer> deque = new ArrayDeque<>();
+
+            for(int i = 0; i < len; i++){
+                // 移除队头，若已不在窗口内
+                if(!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                    deque.pollFirst();
+                }
+
+                // 移除队尾，比当前元素小
+                while(!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                    deque.pollLast();
+                }
+
+                deque.offerLast(i);
+
+                if(i >= k - 1) {
+                    result[i - k + 1] = nums[deque.peekFirst()];
+                }
+            }
+            return result;
+        }
+    }
+  ```
