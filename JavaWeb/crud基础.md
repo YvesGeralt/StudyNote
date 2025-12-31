@@ -12,6 +12,8 @@
     1. controller层:获取DTO对象，调用service层，返回`Result.success()`<br>
     2. service层:将DTO对象转化为entity对象，(使用`BeanUtils.copyProperties`来拷贝属性),调用mapper层，传入entity对象。
     3. mapper层:如果数据库逻辑操作简单，直接在注解编写SQL语句，若复杂则在xml文件中用标签语句编写
+  - 文件上传
+    1. controller层:获取file对象,调用ali云工具，将文件上传至云端，返回文件存储路径，使图片回显
 - GET
   - 分页查询<br>
     1. controller层:使用MyBatis的分页插件pageHelper,获取PageQueryDTO对象，返回`Result.success(pageResult)`<br>
