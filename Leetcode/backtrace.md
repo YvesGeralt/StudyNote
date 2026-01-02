@@ -49,3 +49,52 @@ void backTrace (可选列表，已走路径)：
 
     }
   ```
+
+- 组合 III
+  ```
+    /**
+        用path记录组合，result返回结果
+        当最小和 > n时，返回空集
+        当剩下的数不足 k - path.size()时，无需遍历
+    */
+    import java.util.*;
+
+    class Solution {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+
+        void backtrace(int n, int k, int index, int sum){
+            if(path.size() == k){
+                if(sum == n){
+                    result.add(new ArrayList<Integer>(path));
+                }
+                return;
+            }
+
+            for(int i = index; i <= 10 - (k - path.size()); i++){
+                if(sum + i > n){
+                    break;
+                }
+                path.add(i);
+                sum += i;
+                backtrace(n, k, i+1, sum);
+                path.remove(path.size() - 1);
+                sum -= i;
+            }
+        }
+
+        public List<List<Integer>> combinationSum3(int k, int n) {
+            // 当最小和 > n时，返回空集
+            int sum = 0;
+            for(int i = 1; i <= k; i++){
+                sum += i;
+            }
+            if(sum > n){
+                return result;
+            }
+
+            backtrace(n,k,1,0);
+            return result;
+        }
+    }
+  ```
