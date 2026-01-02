@@ -33,6 +33,7 @@ void backTrace (可选列表，已走路径)：
                 result.add(new ArrayList<Integer>(path));
                 return;
             }
+            // 剪枝，当剩下的不满足 k - path.size()时，无需再遍历
             for(int i = startIndex; i <= n; i++){
                 path.add(i);
                 backtrace(n, k, i+1);
