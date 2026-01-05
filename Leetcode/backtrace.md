@@ -34,7 +34,7 @@ void backTrace (可选列表，已走路径)：
                 return;
             }
             // 剪枝，当剩下的不满足 k - path.size()时，无需再遍历
-            for(int i = startIndex; i <= n; i++){
+            for(int i = startIndex; i <= n - (k - path.size()); i++){
                 path.add(i);
                 backtrace(n, k, i+1);
                 // 撤销路径中的最后一个元素
